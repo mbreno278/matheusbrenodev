@@ -1,13 +1,15 @@
 # MatheusBrenoDEV
-Página de portifholio portfolio
-Com fogo em desenvolvimento web e mobile
+Página de portfolio
+
+Com foco em desenvolvimento web e mobile
 
 Desenvolvimento web:
-1 - HTML 5
-2 - CSS 3
-3 - JavaScript
-4 - PHP 7
-
+<br/>1 - HTML 5
+<br />2 - CSS 3
+<br />3 - JavaScript
+<br />4 - PHP 7
+<br />
+<br />
 Desenvolvimento mobile:
-1 - XML
-2 - Java
+<br />1 - XML
+<br />2 - Java
