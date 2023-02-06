@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">FastFood</string>
+    <string name="search">Pesquisar</string>
+    <string name="meals">Refeições</string>
+    <string name="start">Começar</string>
+    <string name="shop_car">Carrinho de compta</string>
+    <string name="search_foods_you_love">Pesquise comida que você ame</string>
+    <string name="fast_delivery">Entrega Rápida</string>
+    <string name="send">Enviar</string>
+    <string name="send_message_order">Envie mensagem e faça seu pedido</string>
+    <string name="text_default_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia orci orci, at viverra ligula elementum a. Nam at metus ac ex tempus pulvinar in et dolor.</string>
+    <string name="sing_in_with_your_account">Faça login com\nsua conta</string>
+    <string name="sing_up_create_new_account">Crie uma nova conta</string>
+    <string name="sing_in">Login</string>
+    <string name="sing_up">Cadastre-se</string>
+    <string name="sing_in_email">E-email</string>
+    <string name="sing_in_password">Senha</string>
+    <string name="forgot_the_password_title">Esqueci a senha</string>
+    <string name="forgot_the_password_description">Digite seu e-mail para poder recuper a sua conta, será enviado um codigo de verificação para seu e-mail, para poder recuperar a sua conta.</string>
+    <string name="forgot_the_password">Esqueceu a senha? click aqui</string>
+    <string name="direct_acess">Acesso direto</string>
+    <string name="dont_have_an_account">Não tem um conta? click aqui</string>
+    <string name="already_have_an_account">Já tem uma conta?, click aqui</string>
+    <string name="sing_up_name">Nome</string>
+    <string name="sing_up_email">E-mail</string>
+    <string name="sing_up_password">Senha</string>
+    <string name="sing_up_password_again">Senha novamente</string>
+    
+    <string name="open_drawer">DrawerLayout</string>
+    <string name="close_drawer">DrawerLayoutCL</string>
+    
+</resources>

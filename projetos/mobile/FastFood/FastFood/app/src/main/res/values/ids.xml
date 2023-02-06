@@ -1,0 +1,118 @@
+<resources>
+    
+    <item
+        type="id"
+        name="toolbar"
+    />
+    
+    <item
+        type="id"
+        name="recycler_view"
+    />
+    
+    <item
+        type="id"
+        name="btn_start"
+    />
+    
+    <item
+        type="id"
+        name="btn_access_account"
+    />
+    
+    <item
+        type="id"
+        name="btn_access_direct"
+    />
+    
+    <item
+        type="id"
+        name="input_name"
+    />
+    
+    <item
+        type="id"
+        name="input_email"
+    />
+    
+    <item
+        type="id"
+        name="input_phone"
+    />
+    
+    <item
+        type="id"
+        name="input_password"
+    />
+    
+    <item
+        type="id"
+        name="input_password_again"
+    />
+    
+    <item
+        type="id"
+        name="btn_sing_in"
+    />
+    
+    <item
+        type="id"
+        name="btn_sing_up"
+    />
+    
+    <item
+        type="id"
+        name="btn_send"
+    />
+    
+    <item
+        type="id"
+        name="btn_forgot_password"
+    />
+    
+    <item
+        type="id"
+        name="tab_layout"
+    />
+    
+    <item
+        type="id"
+        name="link_forgot_password"
+    />
+    
+    <item
+        type="id"
+        name="link_sing_in"
+    />
+    
+    <item
+        type="id"
+        name="link_sing_up"
+    />
+    
+    <item
+        type="id"
+        name="frame_layout"
+    />
+    
+    <item
+        type="id"
+        name="app_bar_layout"
+    />
+    
+    <item
+        type="id"
+        name="search"
+    />
+    
+    <item
+        type="id"
+        name="btn_search"
+    />
+    
+    <item
+        type="id"
+        name="btn_clear"
+    />
+    
+</resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr
+        name="styleMyEditText"
+        format="reference"
+    />
+    
+    <declare-styleable
+        name="MyEditText">
+        
+        <attr
+            name="iconLeft"
+            format="integer"
+        />
+        
+        <attr
+            name="iconRight"
+            format="integer"
+        />
+        
+        <attr
+            name="inputType">
+            <flag
+                name="text"
+                value="0"
+            />
+            
+            <flag
+                name="textPersonName"
+                value="1"
+            />
+            
+            <flag
+                name="textEmailAddress"
+                value="2"
+            />
+            
+            <flag
+                name="phone"
+                value="3"
+            />
+            
+            <flag
+                name="textPassword"
+                value="4"
+            />
+        </attr>
+        
+        <attr
+            name="imeOptions">
+            <flag
+                name="actionDone"
+                value="1"
+            />
+            
+            <flag
+                name="actionNext"
+                value="2"
+            />
+            
+            <flag
+                name="actionPrevious"
+                value="3"
+            />
+            
+        </attr>
+        
+        <attr
+            name="hint"
+            format="string"
+        />
+        
+    </declare-styleable>
+        
+</resources>

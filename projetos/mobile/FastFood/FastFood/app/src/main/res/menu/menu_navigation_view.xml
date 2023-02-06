@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    
+    <group
+        android:id="@+id/bottom_app_bar"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_home"
+            android:title="Home"
+            android:name="Home"
+            android:icon="@drawable/ic_home" />
+        
+        <item
+            android:id="@+id/navigation_explore"
+            android:title="Explore"
+            android:name="Explore"
+            android:icon="@drawable/ic_whatshot" />
+        
+        <item
+            android:id="@+id/navigation_account"
+            android:title="Conta"
+            android:name="Conta"
+            android:icon="@drawable/ic_person" />
+    </group>
+    
+    <group
+        android:id="@+id/account"
+        android:title="Conta">
+        <item
+            android:id="@+id/navigation_sing_in"
+            android:title="Login"
+            android:icon="@drawable/ic_login" />
+        
+        <item
+            android:id="@+id/navigation_sing_up"
+            android:title="Cadastre-se"
+            android:icon="@drawable/ic_account_circle" />
+        
+        <item
+            android:id="@+id/navigation_logout"
+            android:title="Deslogar"
+            android:icon="@drawable/ic_logout" />
+    </group>
+    
+    <group
+        android:id="@+id/more"
+        android:title="Mais informações">
+        <item
+            android:id="@+id/navigation_about_us"
+            android:title="Sobre nós"
+            android:icon="@drawable/ic_info" />
+        
+        <item
+            android:id="@+id/navigation_website"
+            android:title="Nosso site"
+            android:icon="@drawable/ic_info" />
+        
+    </group>
+    
+</menu>

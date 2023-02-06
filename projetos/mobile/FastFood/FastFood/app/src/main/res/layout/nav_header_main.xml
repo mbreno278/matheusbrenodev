@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_header_main"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:padding="@dimen/padding_large"
+    android:gravity="bottom"
+    android:background="@color/amber_200"
+    android:orientation="horizontal">
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+    
+    <android.widget.ImageView
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="@dimen/margin_normal"
+        android:src="@drawable/ic_account_circle_36"
+        android:scaleType="centerCrop"
+    />
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <android.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome de usuario"
+            android:textSize="@dimen/text_size_body_large"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+        />
+        
+        <android.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail do usúario"
+            android:textSize="@dimen/text_size_body_small"
+            android:textColor="@color/black"
+        />
+        
+    </android.widget.LinearLayout>
+
+    </android.widget.LinearLayout>
+    
+</android.widget.LinearLayout>

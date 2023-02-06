@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:title="Home"
+        android:name="Home"
+        android:icon="@drawable/ic_home" />
+    
+    <item
+        android:id="@+id/navigation_explore"
+        android:title="Explore"
+        android:name="Explore"
+        android:icon="@drawable/ic_whatshot" />
+    
+    <item
+        android:id="@+id/navigation_account"
+        android:title="Conta"
+        android:name="Conta"
+        android:icon="@drawable/ic_person" />
+    
+</menu>
