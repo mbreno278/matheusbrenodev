@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_200"
+    android:orientation="vertical">
+    
+    <include
+        layout="@layout/toolbar_simple"
+    />
+    
+    <android.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.widget.LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+            <android.widget.LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_large"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                
+                <android.widget.ImageView
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:src="@drawable/ic_account_circle_36"
+                    android:scaleType="centerCrop"
+                />
+                
+                <android.widget.LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nome de usuario"
+                        android:textSize="@dimen/text_size_body_large"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="E-mail do usúario"
+                        android:textSize="@dimen/text_size_body_small"
+                        android:textColor="@color/black"
+                    />
+                    
+                </android.widget.LinearLayout>
+                
+            </android.widget.LinearLayout>
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:foreground="@drawable/ripple_small"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="@dimen/elevation_level_1">
+                <android.widget.RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:orientation="horizontal">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Perfil"
+                        android:textSize="@dimen/text_size_body_medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.ImageView
+                        android:layout_width="@dimen/icon_size_normal"
+                        android:layout_height="@dimen/icon_size_normal"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_chevron_right"
+                        android:scaleType="centerCrop"
+                        android:tint="@color/black"
+                    />
+                    
+                    
+                </android.widget.RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:foreground="@drawable/ripple_small"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="@dimen/elevation_level_1">
+                <android.widget.RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:orientation="horizontal">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Forma de pagamento"
+                        android:textSize="@dimen/text_size_body_medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.ImageView
+                        android:layout_width="@dimen/icon_size_normal"
+                        android:layout_height="@dimen/icon_size_normal"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_chevron_right"
+                        android:scaleType="centerCrop"
+                        android:tint="@color/black"
+                    />
+                    
+                </android.widget.RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:foreground="@drawable/ripple_small"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="@dimen/elevation_level_1">
+                <android.widget.RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:orientation="horizontal">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Pedidos"
+                        android:textSize="@dimen/text_size_body_medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.ImageView
+                        android:layout_width="@dimen/icon_size_normal"
+                        android:layout_height="@dimen/icon_size_normal"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_chevron_right"
+                        android:scaleType="centerCrop"
+                        android:tint="@color/black"
+                    />
+                    
+                </android.widget.RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:foreground="@drawable/ripple_small"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="@dimen/elevation_level_1">
+                <android.widget.RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:orientation="horizontal">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Favoritos"
+                        android:textSize="@dimen/text_size_body_medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.ImageView
+                        android:layout_width="@dimen/icon_size_normal"
+                        android:layout_height="@dimen/icon_size_normal"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_chevron_right"
+                        android:scaleType="centerCrop"
+                        android:tint="@color/black"
+                    />
+                    
+                </android.widget.RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:foreground="@drawable/ripple_small"
+                android:clickable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/corner_radius_medium"
+                app:cardElevation="@dimen/elevation_level_1">
+                <android.widget.RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_large"
+                    android:orientation="horizontal">
+                    
+                    <android.widget.TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="Historico de compras"
+                        android:textSize="@dimen/text_size_body_medium"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                    />
+                    
+                    <android.widget.ImageView
+                        android:layout_width="@dimen/icon_size_normal"
+                        android:layout_height="@dimen/icon_size_normal"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_chevron_right"
+                        android:scaleType="centerCrop"
+                        android:tint="@color/black"
+                    />
+                    
+                </android.widget.RelativeLayout>
+            </androidx.cardview.widget.CardView>
+            
+        </android.widget.LinearLayout>
+    </android.widget.ScrollView>
+    
+</android.widget.LinearLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingLeft="@dimen/padding_large"
+    android:paddingRight="@dimen/padding_large"
+    android:orientation="vertical">
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        
+        <android.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            android:textSize="@dimen/text_size_title_large"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+        />
+        
+        <android.widget.ImageButton
+            android:id="@+id/btn_add_favorito"
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
+            android:layout_weight="0"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_favorite_border"
+            android:tint="?attr/colorAccent"
+            android:clickable="true"
+        />
+        
+    </android.widget.LinearLayout>
+    
+    <android.widget.RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal">
+        
+        <android.widget.ImageView
+            android:id="@+id/icon_mark_point"
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="@dimen/margin_small"
+            android:src="@drawable/ic_place"
+            android:scaleType="centerCrop"
+            android:tint="?attr/colorAccent"
+        />
+        
+        <android.widget.TextView
+            android:id="@+id/mark_point_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/icon_mark_point"
+            android:text="Endereço"
+            android:textSize="@dimen/text_size_label_medium"
+            android:textColor="@color/black"
+        />
+        
+        <android.widget.ImageView
+            android:id="@+id/icon_clock"
+            android:layout_width="@dimen/icon_size_small"
+            android:layout_height="@dimen/icon_size_small"
+            android:layout_below="@id/icon_mark_point"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginRight="@dimen/margin_small"
+            android:src="@drawable/ic_watch_later"
+            android:scaleType="centerCrop"
+            android:tint="?attr/colorAccent"
+        />
+        
+        <android.widget.TextView
+            android:id="@+id/clock_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_below="@id/mark_point_address"
+            android:layout_toRightOf="@id/icon_clock"
+            android:text="Hora que abre e fecha"
+            android:textSize="@dimen/text_size_label_medium"
+            android:textColor="@color/black"
+        />
+        
+    </android.widget.RelativeLayout>
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_large"
+        android:orientation="horizontal">
+        
+        <android.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="R$ 5,00"
+            android:textSize="@dimen/text_size_title_large"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+        />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_shop_cart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:padding="@dimen/padding_large"
+            android:text="Adicionar ao carrinho"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_label_medium"
+            android:clickable="true"
+            app:rippleColor="@color/white"
+            app:cornerRadius="@dimen/corner_radius_medium"
+        />
+        
+    </android.widget.LinearLayout>
+    
+    <include
+        layout="@layout/star_view" />
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_large"
+        android:orientation="vertical">
+        
+        <android.widget.TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:text="Item Relacionado"
+            android:textSize="@dimen/text_size_title_large"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+        />
+        
+        <include
+            layout="@layout/recycler_view"
+        />
+        
+    </android.widget.LinearLayout>
+    
+</android.widget.LinearLayout>

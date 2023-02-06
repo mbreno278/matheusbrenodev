@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    tools:context=".SplashActivity">
+
+    <ScrollView
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:layout_weight="1">
+
+        <LinearLayout
+             android:layout_height="wrap_content"
+             android:layout_width="match_parent"
+             android:gravity="center">
+
+            <ImageView
+                 android:layout_height="400dp"
+                 android:layout_width="match_parent"
+                 android:src="@drawable/icons_alimentos"
+                 android:scaleType="centerCrop" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+         android:layout_height="wrap_content"
+         android:layout_width="match_parent"
+         android:background="@drawable/corner_radius_medium"
+         android:padding="@dimen/padding_large"
+         android:orientation="vertical"
+         android:layout_weight="0">
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:textColor="@color/white"
+             android:theme="@style/TitleLarge"
+             android:text="@string/meals" />
+
+        <TextView
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:layout_marginBottom="@dimen/margin_normal"
+             android:textSize="@dimen/text_size_body_medium"
+             android:textColor="@color/white"
+             android:layout_marginTop="@dimen/margin_normal"
+             android:text="@string/text_default_1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/start"
+            android:textSize="@dimen/text_size_label_medium"
+            android:textColor="@color/black"
+            android:padding="@dimen/padding_large"
+            android:onClick="btnStart"
+            app:backgroundTint="@color/white"
+            app:rippleColor="#CCCCCC"
+            app:cornerRadius="@dimen/corner_radius_medium"
+        />
+
+    </LinearLayout>
+
+</LinearLayout>

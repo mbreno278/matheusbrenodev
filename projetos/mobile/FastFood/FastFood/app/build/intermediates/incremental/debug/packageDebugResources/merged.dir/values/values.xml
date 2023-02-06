@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <attr format="reference" name="styleMyEditText"/>
+    <color name="amber_100">#FFF8E1</color>
+    <color name="amber_200">#FFE082</color>
+    <color name="amber_300">#FFD54F</color>
+    <color name="amber_400">#FFCA28</color>
+    <color name="amber_500">#FFC107</color>
+    <color name="amber_600">#FFB300</color>
+    <color name="amber_700">#FFA000</color>
+    <color name="amber_800">#FF8F00</color>
+    <color name="black">#333333</color>
+    <color name="grey_200">#F5F5F5</color>
+    <color name="grey_300">#EEEEEE</color>
+    <color name="grey_400">#BDBDBD</color>
+    <color name="grey_500">#9E9E9E</color>
+    <color name="red_200">#EF9A9A</color>
+    <color name="red_300">#E57373</color>
+    <color name="red_400">#EF5350</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_600">#E53935</color>
+    <color name="red_700">#D32F2F</color>
+    <color name="red_800">#C62828</color>
+    <color name="white">#FFFFFF</color>
+    <dimen name="corner_radius_medium">20dp</dimen>
+    <dimen name="corner_radius_small">16dp</dimen>
+    <dimen name="elevation_level_0">0dp</dimen>
+    <dimen name="elevation_level_1">1dp</dimen>
+    <dimen name="elevation_level_2">3dp</dimen>
+    <dimen name="elevation_level_3">6dp</dimen>
+    <dimen name="elevation_level_4">8dp</dimen>
+    <dimen name="elevation_level_5">12dp</dimen>
+    <dimen name="icon_size_edit_text">20dp</dimen>
+    <dimen name="icon_size_large">48dp</dimen>
+    <dimen name="icon_size_normal">24dp</dimen>
+    <dimen name="icon_size_small">18dp</dimen>
+    <dimen name="margin_big">64dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_large_extra">32dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_small_extra">2dp</dimen>
+    <dimen name="paddimg_large_extra">32dp</dimen>
+    <dimen name="padding_big">64dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_small_extra">2dp</dimen>
+    <dimen name="text_size_body_large">16sp</dimen>
+    <dimen name="text_size_body_medium">14sp</dimen>
+    <dimen name="text_size_body_small">12sp</dimen>
+    <dimen name="text_size_display_large">57sp</dimen>
+    <dimen name="text_size_display_medium">45sp</dimen>
+    <dimen name="text_size_display_small">36sp</dimen>
+    <dimen name="text_size_headline_large">32sp</dimen>
+    <dimen name="text_size_headline_medium">28sp</dimen>
+    <dimen name="text_size_headline_small">24sp</dimen>
+    <dimen name="text_size_label_large">14sp</dimen>
+    <dimen name="text_size_label_medium">12sp</dimen>
+    <dimen name="text_size_label_small">11sp</dimen>
+    <dimen name="text_size_title_large">22sp</dimen>
+    <dimen name="text_size_title_medium">16sp</dimen>
+    <dimen name="text_size_title_small">14sp</dimen>
+    <item name="app_bar_layout" type="id"/>
+    <item name="btn_access_account" type="id"/>
+    <item name="btn_access_direct" type="id"/>
+    <item name="btn_clear" type="id"/>
+    <item name="btn_forgot_password" type="id"/>
+    <item name="btn_search" type="id"/>
+    <item name="btn_send" type="id"/>
+    <item name="btn_sing_in" type="id"/>
+    <item name="btn_sing_up" type="id"/>
+    <item name="btn_start" type="id"/>
+    <item name="frame_layout" type="id"/>
+    <item name="input_email" type="id"/>
+    <item name="input_name" type="id"/>
+    <item name="input_password" type="id"/>
+    <item name="input_password_again" type="id"/>
+    <item name="input_phone" type="id"/>
+    <item name="link_forgot_password" type="id"/>
+    <item name="link_sing_in" type="id"/>
+    <item name="link_sing_up" type="id"/>
+    <item name="recycler_view" type="id"/>
+    <item name="search" type="id"/>
+    <item name="tab_layout" type="id"/>
+    <item name="toolbar" type="id"/>
+    <string name="already_have_an_account">Já tem uma conta?, click aqui</string>
+    <string name="app_name">FastFood</string>
+    <string name="close_drawer">DrawerLayoutCL</string>
+    <string name="direct_acess">Acesso direto</string>
+    <string name="dont_have_an_account">Não tem um conta? click aqui</string>
+    <string name="fast_delivery">Entrega Rápida</string>
+    <string name="forgot_the_password">Esqueceu a senha? click aqui</string>
+    <string name="forgot_the_password_description">Digite seu e-mail para poder recuper a sua conta, será enviado um codigo de verificação para seu e-mail, para poder recuperar a sua conta.</string>
+    <string name="forgot_the_password_title">Esqueci a senha</string>
+    <string name="meals">Refeições</string>
+    <string name="open_drawer">DrawerLayout</string>
+    <string name="search">Pesquisar</string>
+    <string name="search_foods_you_love">Pesquise comida que você ame</string>
+    <string name="send">Enviar</string>
+    <string name="send_message_order">Envie mensagem e faça seu pedido</string>
+    <string name="shop_car">Carrinho de compta</string>
+    <string name="sing_in">Login</string>
+    <string name="sing_in_email">E-email</string>
+    <string name="sing_in_password">Senha</string>
+    <string name="sing_in_with_your_account">Faça login com\nsua conta</string>
+    <string name="sing_up">Cadastre-se</string>
+    <string name="sing_up_create_new_account">Crie uma nova conta</string>
+    <string name="sing_up_email">E-mail</string>
+    <string name="sing_up_name">Nome</string>
+    <string name="sing_up_password">Senha</string>
+    <string name="sing_up_password_again">Senha novamente</string>
+    <string name="start">Começar</string>
+    <string name="text_default_1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia orci orci, at viverra ligula elementum a. Nam at metus ac ex tempus pulvinar in et dolor.</string>
+    <style name="Theme.Application" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        
+        <item name="colorPrimary">@color/red_500</item>
+        <item name="colorPrimaryVariant">@color/red_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <item name="colorSecondary">@color/amber_500</item>
+        <item name="colorSecondaryVariant">@color/amber_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        
+        <item name="android:statusBarColor" ns1:targetApi="l">?attr/colorPrimaryVariant</item>
+        
+    </style>
+    <style name="TitleLarge">
+        <item name="android:textSize">@dimen/text_size_title_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="ToolbarStyle">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+    <declare-styleable name="MyEditText">
+        
+        <attr format="integer" name="iconLeft"/>
+        
+        <attr format="integer" name="iconRight"/>
+        
+        <attr name="inputType">
+            <flag name="text" value="0"/>
+            
+            <flag name="textPersonName" value="1"/>
+            
+            <flag name="textEmailAddress" value="2"/>
+            
+            <flag name="phone" value="3"/>
+            
+            <flag name="textPassword" value="4"/>
+        </attr>
+        
+        <attr name="imeOptions">
+            <flag name="actionDone" value="1"/>
+            
+            <flag name="actionNext" value="2"/>
+            
+            <flag name="actionPrevious" value="3"/>
+            
+        </attr>
+        
+        <attr format="string" name="hint"/>
+        
+    </declare-styleable>
+</resources>
