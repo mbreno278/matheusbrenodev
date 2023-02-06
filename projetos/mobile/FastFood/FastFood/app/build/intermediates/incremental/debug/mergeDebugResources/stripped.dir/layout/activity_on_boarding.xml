@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+    />
+    
+    <com.google.android.material.tabs.TabLayout
+        android:id="@id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+    />
+    
+    <android.widget.LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0"
+        android:padding="@dimen/padding_large">
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@id/btn_access_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:padding="@dimen/padding_large"
+            android:text="@string/sing_in"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_label_medium"
+            android:onClick="btnClick"
+            app:cornerRadius="@dimen/corner_radius_medium"
+        />
+        
+        <com.google.android.material.button.MaterialButton
+            android:id="@id/btn_access_direct"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_large"
+            android:text="@string/direct_acess"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_label_medium"
+            android:onClick="btnClick"
+            app:backgroundTint="#F3F3F3"
+            app:rippleColor="#CCCCCC"
+            app:cornerRadius="@dimen/corner_radius_medium"
+        />
+        
+    </android.widget.LinearLayout>
+    
+</android.widget.LinearLayout>
