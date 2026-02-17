@@ -1,374 +1,327 @@
-class VJSLexer {
-  constructor(input) {
-    this.input = input;
-    this.position = 0;
-    this.line = 1;
-    this.column = 1;
-    this.tokens = [];
-  }
-  
-  currentChar() {
-    return this.input[this.position];
-  }
-  
-  peekChar(offset = 1) {
-    return this.input[this.position + offset];
-  }
-  
-  advance() {
-    if (this.currentChar() === "\n") {
-      this.line++;
-      this.column = 1;
-    } else {
-      this.column++;
-    }
-    this.position++;
-  }
-  
-  // agora com parâmetros de linha/coluna opcionais (úteis para marcar início do token)
-  addToken(type, value = null, line = this.line, column = this.column) {
-    this.tokens.push({
-      type,
-      value,
-      line,
-      column
-    });
-  }
-  
-  isLetter(char) {
-    return /[a-zA-Z_$]/.test(char);
-  }
-  
-  isNumber(char) {
-    return /[0-9]/.test(char);
-  }
-  
-  isWhitespace(char) {
-    return /\s/.test(char);
+// VJSParser.js — Parser atualizado e corrigido (blocos padronizados)
+
+class VJSParser {
+  constructor(tokens) {
+    this.tokens = tokens || [];
+    this.current = 0;
   }
 
-  // identifica identificadores/reservadas (aceita $ e _)
-  lexIdentifier() {
-    let startLine = this.line;
-    let startCol = this.column;
-    let value = "";
-    
-    while (this.currentChar() && (this.isLetter(this.currentChar()) || this.isNumber(this.currentChar()))) {
-      value += this.currentChar();
-      this.advance();
+  peek(offset = 0) { return this.tokens[this.current + offset]; }
+  isAtEnd() { const t = this.peek(); return !t || t.type === "EOF"; }
+  advance() { if (!this.isAtEnd()) return this.tokens[this.current++]; return this.peek(); }
+  check(type) { const t = this.peek(); return t && t.type === type; }
+  match(...types) { for (const t of types) if (this.check(t)) return this.advance(); return null; }
+  expect(type, message) {
+    const token = this.match(type);
+    if (!token) {
+      const found = this.peek()?.type || "EOF";
+      throw new Error((message ? message + " — " : "") + `Esperado ${type} mas encontrado ${found}`);
     }
-    
-    // palavras-chave: inglês + português (mapeadas para o mesmo token)
-    const keywords = [
-      // ingles
-      "var","let","const","function","return",
-      "if","else","for","while","do","break","continue",
-      "class","constructor","this","new","switch","case","default",
-      "try","catch","finally","throw","import","export","from","as",
-      "extends","super","instanceof","typeof","in","of",
-      "async","await","yield","true","false","null","undefined","NaN","Infinity",
-      // portugues
-      "variavel","constante","funcao","retorne",
-      "se","senao","para","enquanto","faca","pare","continue",
-      "classe","construtor","este","novo","escolha","caso","padrao",
-      "tente","capture","finalmente","lance","importar","exportar","de","como",
-      "estende","super","instanciaDe","tipoDe","em","de","assincrono","aguardar",
-      "verdadeiro","falso","nulo","indefinido"
-    ];
-    
-    // tipos (ingles + pt)
-    const types = [
-      "number","string","boolean","object","array","any",
-      "numero","texto","booleano","objeto","lista","qualquer"
-    ];
-    
-    // builtins (opcionais: tratados como IDENTIFIER, mas marcados se desejar)
-    const builtins = [
-      "console","Math","Array","String","Object","JSON","Date","RegExp",
-      "Map","Set","Promise","Symbol","Reflect","Intl"
-    ];
-    
-    if (keywords.includes(value)) {
-      this.addToken("KEYWORD", value, startLine, startCol);
-    } else if (types.includes(value)) {
-      this.addToken("TYPE", value, startLine, startCol);
-    } else if (builtins.includes(value)) {
-      this.addToken("BUILTIN", value, startLine, startCol);
-    } else {
-      this.addToken("IDENTIFIER", value, startLine, startCol);
-    }
+    return token;
   }
-  
-  // números: suporte a inteiros, ponto decimal, exponencial, hex/bin/octal simples
-  lexNumber() {
-    let startLine = this.line;
-    let startCol = this.column;
-    let value = "";
-    
-    // suporte a 0x, 0b, 0o
-    if (this.currentChar() === "0" && (this.peekChar() === "x" || this.peekChar() === "X")) {
-      // hex
-      value += this.currentChar(); this.advance();
-      value += this.currentChar(); this.advance();
-      while (this.currentChar() && /[0-9a-fA-F]/.test(this.currentChar())) {
-        value += this.currentChar(); this.advance();
-      }
-      this.addToken("NUMBER", value, startLine, startCol);
-      return;
+
+  parse() {
+    const body = [];
+    while (!this.isAtEnd()) {
+      const t = this.peek();
+      if (!t) break;
+      if (t.type === "COMMENT") { this.advance(); continue; }
+      body.push(this.parseStatement());
     }
-    if (this.currentChar() === "0" && (this.peekChar() === "b" || this.peekChar() === "B")) {
-      // bin
-      value += this.currentChar(); this.advance();
-      value += this.currentChar(); this.advance();
-      while (this.currentChar() && /[01]/.test(this.currentChar())) {
-        value += this.currentChar(); this.advance();
-      }
-      this.addToken("NUMBER", value, startLine, startCol);
-      return;
-    }
-    if (this.currentChar() === "0" && (this.peekChar() === "o" || this.peekChar() === "O")) {
-      // oct
-      value += this.currentChar(); this.advance();
-      value += this.currentChar(); this.advance();
-      while (this.currentChar() && /[0-7]/.test(this.currentChar())) {
-        value += this.currentChar(); this.advance();
-      }
-      this.addToken("NUMBER", value, startLine, startCol);
-      return;
+    return { type: "Program", body };
+  }
+
+  parseStatement() {
+    const token = this.peek();
+    if (!token) throw new Error("Fim inesperado do código");
+
+    if (token.type === "KEYWORD") {
+      const v = token.value;
+      if (["variavel","var","let","constante","const"].includes(v)) return this.parseVariableDeclaration();
+      if (["funcao","function","async","assincrono"].includes(v)) return this.parseFunctionDeclaration();
+      if (["retornar","return"].includes(v)) return this.parseReturnStatement();
+      if (["se","if"].includes(v)) return this.parseIfStatement();
+      if (["para","for"].includes(v)) return this.parseForStatement();
+      if (["enquanto","while"].includes(v)) return this.parseWhileStatement();
     }
 
-    // decimal / float / expo
-    while (this.currentChar() && this.isNumber(this.currentChar())) {
-      value += this.currentChar();
-      this.advance();
-    }
-    if (this.currentChar() === "." && this.isNumber(this.peekChar())) {
-      value += this.currentChar(); // .
-      this.advance();
-      while (this.currentChar() && this.isNumber(this.currentChar())) {
-        value += this.currentChar();
-        this.advance();
-      }
-    }
-    // expo e/E
-    if (this.currentChar() && (this.currentChar() === "e" || this.currentChar() === "E")) {
-      value += this.currentChar();
-      this.advance();
-      if (this.currentChar() === "+" || this.currentChar() === "-") {
-        value += this.currentChar();
-        this.advance();
-      }
-      while (this.currentChar() && this.isNumber(this.currentChar())) {
-        value += this.currentChar();
-        this.advance();
-      }
-    }
-    
-    this.addToken("NUMBER", value, startLine, startCol);
+    if (["IDENTIFIER","NUMBER","STRING","TEMPLATE","LPAREN","LBRACKET","LBRACE"].includes(token.type))
+      return this.parseExpressionStatement();
+
+    if (["PLUS","MINUS","STAR","SLASH","BANG"].includes(token.type))
+      return this.parseExpressionStatement();
+
+    throw new Error("Instrução desconhecida: " + token.type);
   }
-  
-  // strings simples e template literals (backticks)
-  lexString() {
-    let startLine = this.line;
-    let startCol = this.column;
-    let quote = this.currentChar(); // ' " or `
-    let value = "";
-    this.advance(); // consome a aspa inicial
-    
-    // template literal com backticks: ler até o próximo backtick (não expandimos ${} aqui)
-    if (quote === "`") {
-      while (this.currentChar()) {
-        if (this.currentChar() === "`") break;
-        // suportar escapes
-        if (this.currentChar() === "\\" && this.peekChar()) {
-          value += this.currentChar();
-          this.advance();
-          value += this.currentChar();
-          this.advance();
-          continue;
-        }
-        // se encontrar ${, podemos opcionalmente parar e emitir token TEMPLATE_START,
-        // mas para simplicidade tratamos todo conteúdo como TEMPLATE_RAW
-        value += this.currentChar();
-        this.advance();
-      }
-      if (this.currentChar() === "`") this.advance(); // fecha
-      this.addToken("TEMPLATE", value, startLine, startCol);
-      return;
-    }
-    
-    // aspas simples/duplas
-    while (this.currentChar() && this.currentChar() !== quote) {
-      // suporte a escape de aspas e outros escapes
-      if (this.currentChar() === "\\" && this.peekChar()) {
-        value += this.currentChar(); // \
-        this.advance();
-        value += this.currentChar(); // caractere escapado
-        this.advance();
-        continue;
-      }
-      value += this.currentChar();
+
+  // =========================
+  // DECLARAÇÕES
+  // =========================
+
+  parseVariableDeclaration() {
+    const kw = this.advance();
+    const idTok = this.expect("IDENTIFIER", "Nome da variável esperado");
+
+    let varType = null;
+    if (this.check("COLON")) {
       this.advance();
+      varType = this.expect("IDENTIFIER", "Tipo esperado").value;
     }
-    // consumir a aspa de fechamento
-    if (this.currentChar() === quote) {
+
+    let init = null;
+    if (this.check("EQUALS") || this.check("EQUAL")) {
       this.advance();
+      init = this.parseExpression();
+    }
+
+    if (this.check("SEMICOLON")) this.advance();
+
+    return {
+      type: "VariableDeclaration",
+      kind: (["constante","const"].includes(kw.value) ? "const":"let"),
+      varType,
+      declarations: [{ id: { type:"Identifier", name:idTok.value }, init }]
+    };
+  }
+
+  parseFunctionDeclaration() {
+    this.advance(); // funcao
+
+    let name = null;
+    if (this.check("IDENTIFIER"))
+      name = { type:"Identifier", name:this.advance().value };
+
+    this.expect("LPAREN");
+
+    const params = [];
+    while (!this.check("RPAREN") && !this.isAtEnd()) {
+      const paramName = this.expect("IDENTIFIER","Nome de parametro esperado").value;
+      let paramType = null;
+
+      if (this.check("COLON")) {
+        this.advance();
+        paramType = this.expect("IDENTIFIER","Tipo esperado apos ':'").value;
+      }
+
+      params.push({ type:"Identifier", name:paramName, paramType });
+
+      if (this.check("COMMA")) this.advance();
+    }
+
+    this.expect("RPAREN");
+
+    let returnType = null;
+    if (this.check("COLON")) {
+      this.advance();
+      returnType = this.expect("IDENTIFIER","Tipo de retorno esperado").value;
+    }
+
+    const body = this.parseBlock();
+
+    return {
+      type:"FunctionDeclaration",
+      id:name,
+      params,
+      returnType,
+      body
+    };
+  }
+
+  parseReturnStatement() {
+    this.advance();
+    const arg = this.check("SEMICOLON") ? null : this.parseExpression();
+    if (this.check("SEMICOLON")) this.advance();
+    return { type:"ReturnStatement", argument:arg };
+  }
+
+  parseIfStatement() {
+    this.advance();
+
+    let test;
+    if (this.check("LPAREN")) {
+      this.advance();
+      test = this.parseExpression();
+      this.expect("RPAREN");
     } else {
-      // fim inesperado de arquivo — manter valor parcial
+      test = this.parseExpression();
     }
-    this.addToken("STRING", value, startLine, startCol);
+
+    const consequent = this.parseBlock();
+
+    let alternate = null;
+    if (this.check("KEYWORD") && ["senao","else"].includes(this.peek().value)) {
+      this.advance();
+      alternate = this.parseBlock();
+    }
+
+    return { type:"IfStatement", test, consequent, alternate };
   }
-  
-  // comentários: // ... e /* ... */
-  lexComment() {
-    // comentário de linha //
-    if (this.currentChar() === "/" && this.peekChar() === "/") {
-      this.advance(); // /
-      this.advance(); // /
-      while (this.currentChar() && this.currentChar() !== "\n") {
-        this.advance();
-      }
-      return true; // comentário consumido
-    }
-    
-    // comentário de bloco /* ... */
-    if (this.currentChar() === "/" && this.peekChar() === "*") {
-      this.advance(); // /
-      this.advance(); // *
-      while (this.currentChar() && !(this.currentChar() === "*" && this.peekChar() === "/")) {
-        this.advance();
-      }
-      if (this.currentChar() === "*" && this.peekChar() === "/") {
-        this.advance(); // *
-        this.advance(); // /
-      }
-      return true; // comentário consumido
-    }
-    
-    return false; // não era comentário
+
+  parseForStatement() {
+    this.advance();
+    this.expect("LPAREN");
+
+    let init = null;
+    if (!this.check("SEMICOLON"))
+      init = this.parseExpression();
+    this.expect("SEMICOLON");
+
+    let test = null;
+    if (!this.check("SEMICOLON"))
+      test = this.parseExpression();
+    this.expect("SEMICOLON");
+
+    let update = null;
+    if (!this.check("RPAREN"))
+      update = this.parseExpression();
+
+    this.expect("RPAREN");
+
+    const body = this.parseBlock();
+
+    return { type:"ForStatement", init, test, update, body };
   }
-  
-  tokenize() {
-    while (this.position < this.input.length) {
-      let char = this.currentChar();
-      
-      if (!char) break;
-      
-      if (this.isWhitespace(char)) {
-        // contar novas linhas e avançar
-        this.advance();
-        continue;
-      }
-      
-      if (this.lexComment()) {
-        continue; // ignora comentário
-      }
-      
-      // identificador / palavra-chave / tipo / builtin
-      if (this.isLetter(char)) {
-        this.lexIdentifier();
-        continue;
-      }
-      
-      // número
-      if (this.isNumber(char)) {
-        this.lexNumber();
-        continue;
-      }
-      
-      // string / template
-      if (char === '"' || char === "'" || char === "`") {
-        this.lexString();
-        continue;
-      }
-      
-      // operadores e tokens multi-caractere: verificar 3, depois 2, depois 1
-      const threeCharTokens = {
-        "===": "STRICT_EQUAL",
-        "!==": "STRICT_NOT_EQUAL",
-        "...": "ELLIPSIS",
-        ">>>": "ZERO_FILL_RIGHT_SHIFT"
-      };
-      const twoCharTokens = {
-        "==": "EQUAL",
-        "!=": "NOT_EQUAL",
-        "<=": "LESS_EQUAL",
-        ">=": "GREATER_EQUAL",
-        "&&": "AND",
-        "||": "OR",
-        "++": "INCREMENT",
-        "--": "DECREMENT",
-        "+=": "PLUS_EQUAL",
-        "-=": "MINUS_EQUAL",
-        "*=": "MUL_EQUAL",
-        "/=": "DIV_EQUAL",
-        "%=": "MOD_EQUAL",
-        "=>": "ARROW",
-        "?.": "OPTIONAL_CHAIN",
-        "**": "EXPONENT",
-        "<<": "LEFT_SHIFT",
-        ">>": "RIGHT_SHIFT",
-        "??": "NULLISH_COALESCING"
-      };
-      const singleCharTokens = {
-        "=": "EQUALS",
-        "+": "PLUS",
-        "-": "MINUS",
-        "*": "STAR",
-        "/": "SLASH",
-        "%": "PERCENT",
-        "(": "LPAREN",
-        ")": "RPAREN",
-        "{": "LBRACE",
-        "}": "RBRACE",
-        "[": "LBRACKET",
-        "]": "RBRACKET",
-        ";": "SEMICOLON",
-        ":": "COLON",
-        ".": "DOT",
-        ",": "COMMA",
-        ">": "GT",
-        "<": "LT",
-        "!": "BANG",
-        "&": "AMP",
-        "|": "PIPE",
-        "?": "QUESTION"
-      };
-      
-      // checar 3-char
-      const three = char + (this.peekChar() || "") + (this.peekChar(2) || "");
-      if (threeCharTokens[three]) {
-        this.addToken(threeCharTokens[three], three);
-        this.advance(); this.advance(); this.advance();
-        continue;
-      }
-      
-      // checar 2-char
-      const two = char + (this.peekChar() || "");
-      if (twoCharTokens[two]) {
-        this.addToken(twoCharTokens[two], two);
-        this.advance(); this.advance();
-        continue;
-      }
-      
-      // checar 1-char
-      if (singleCharTokens[char]) {
-        this.addToken(singleCharTokens[char], char);
-        this.advance();
-        continue;
-      }
-      
-      // se chegou aqui, caractere desconhecido
-      throw new Error(
-        `Caractere inesperado '${char}' na linha ${this.line}, coluna ${this.column}`
-      );
+
+  parseWhileStatement() {
+    this.advance();
+
+    let test;
+    if (this.check("LPAREN")) {
+      this.advance();
+      test = this.parseExpression();
+      this.expect("RPAREN");
+    } else {
+      test = this.parseExpression();
     }
-    
-    // token EOF opcional
-    this.addToken("EOF", null, this.line, this.column);
-    return this.tokens;
+
+    const body = this.parseBlock();
+
+    return { type:"WhileStatement", test, body };
+  }
+
+  parseExpressionStatement() {
+    const expr = this.parseExpression();
+    if (this.check("SEMICOLON")) this.advance();
+    return { type:"ExpressionStatement", expression:expr };
+  }
+
+  // =========================
+  // BLOCO PADRONIZADO
+  // =========================
+
+  parseBlock() {
+    this.expect("LBRACE","Esperado '{' para iniciar bloco");
+
+    const body = [];
+    while (!this.check("RBRACE") && !this.isAtEnd()) {
+      if (this.peek().type === "COMMENT") { this.advance(); continue; }
+      body.push(this.parseStatement());
+    }
+
+    this.expect("RBRACE","Esperado '}' ao fechar bloco");
+    return { type:"BlockStatement", body };
+  }
+
+  // =========================
+  // EXPRESSÕES
+  // =========================
+
+  parseExpression() { return this.parseAssignment(); }
+
+  parseAssignment() {
+    const left = this.parseEquality();
+    if (this.check("EQUAL") || this.check("EQUALS")) {
+      const op = this.advance();
+      const right = this.parseAssignment();
+      return { type:"AssignmentExpression", operator:op.value||op.type, left, right };
+    }
+    return left;
+  }
+
+  parseEquality() {
+    let expr = this.parseComparison();
+    while (this.check("EQUAL") || this.check("NOT_EQUAL")) {
+      const op = this.advance();
+      const right = this.parseComparison();
+      expr = { type:"BinaryExpression", operator:op.value||op.type, left:expr, right };
+    }
+    return expr;
+  }
+
+  parseComparison() {
+    let expr = this.parseTerm();
+    while (this.check("GT") || this.check("LT")) {
+      const op = this.advance();
+      const right = this.parseTerm();
+      expr = { type:"BinaryExpression", operator:op.value||op.type, left:expr, right };
+    }
+    return expr;
+  }
+
+  parseTerm() {
+    let expr = this.parseFactor();
+    while (this.check("PLUS") || this.check("MINUS")) {
+      const op = this.advance();
+      const right = this.parseFactor();
+      expr = { type:"BinaryExpression", operator:op.value||op.type, left:expr, right };
+    }
+    return expr;
+  }
+
+  parseFactor() {
+    let expr = this.parseUnary();
+    while (this.check("STAR") || this.check("SLASH")) {
+      const op = this.advance();
+      const right = this.parseUnary();
+      expr = { type:"BinaryExpression", operator:op.value||op.type, left:expr, right };
+    }
+    return expr;
+  }
+
+  parseUnary() {
+    if (this.check("BANG") || this.check("MINUS")) {
+      const op = this.advance();
+      const right = this.parseUnary();
+      return { type:"UnaryExpression", operator:op.value||op.type, argument:right };
+    }
+    return this.parsePrimary();
+  }
+
+  parsePrimary() {
+    const token = this.peek();
+    if (!token) throw new Error("Expressão inesperada");
+
+    if (this.check("NUMBER")) return { type:"Literal", value:Number(this.advance().value) };
+    if (this.check("STRING")) return { type:"Literal", value:this.advance().value };
+
+    if (this.check("IDENTIFIER"))
+      return { type:"Identifier", name:this.advance().value };
+
+    if (this.check("LPAREN")) {
+      this.advance();
+      const expr = this.parseExpression();
+      this.expect("RPAREN");
+      return expr;
+    }
+
+    // OBJETO
+    if (this.check("LBRACE")) {
+      this.advance();
+      const props=[];
+      while (!this.check("RBRACE")) {
+        const key=this.expect("IDENTIFIER").value;
+        this.expect("COLON","Esperado ':' em objeto literal");
+        const value=this.parseExpression();
+        props.push({ key:{type:"Identifier",name:key}, value });
+        if (this.check("COMMA")) this.advance();
+      }
+      this.expect("RBRACE");
+      return { type:"ObjectExpression", properties:props };
+    }
+
+    throw new Error("Expressão inválida: "+token.type);
   }
 }
 
-window.VJS = window.VJS || {};
-window.VJS.VJSLexer = VJSLexer;
+if (typeof window !== "undefined") { window.VJS = window.VJS || {}; window.VJS.VJSParser = VJSParser; }
+if (typeof module !== "undefined") { module.exports = VJSParser; }
