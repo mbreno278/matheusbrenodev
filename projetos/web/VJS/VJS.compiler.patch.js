@@ -1,29 +1,55 @@
 // VJS.compile.patch.js
-// Força o VJS.compile a usar o VJSCodeGenerator atualizado
+// Força VJS.compile a usar o pipeline atualizado de forma segura e definitiva
 
-(function () {
-
+(function() {
+  
+  function ready() {
+    return (
+      typeof window !== "undefined" &&
+      typeof window.VJS !== "undefined" &&
+      typeof VJS.VJSLexer === "function" &&
+      typeof VJS.VJSParser === "function" &&
+      typeof VJS.VJSCodeGenerator === "function"
+    );
+  }
+  
   function overrideCompile() {
-    if (typeof VJS === "undefined") {
+    if (!ready()) {
       return setTimeout(overrideCompile, 50);
     }
-
-    VJS.compile = function (source) {
+    
+    // Evita sobrescrever múltiplas vezes
+    if (VJS.__compilePatched) {
+      return;
+    }
+    
+    VJS.compile = function(source) {
+      
+      if (typeof source !== "string") {
+        throw new Error("VJS.compile: source precisa ser string");
+      }
+      
+      // 1️⃣ Lexer
       const lexer = new VJS.VJSLexer(source);
       const tokens = lexer.tokenize();
-
+      
+      // 2️⃣ Parser
       const parser = new VJS.VJSParser(tokens);
       const ast = parser.parse();
-
+      
+      // 3️⃣ Generator
       const generator = new VJS.VJSCodeGenerator();
       const js = generator.generate(ast);
-
+      
       return { tokens, ast, js };
     };
-
-    console.log("✅ VJS.compile sobrescrito com novo CodeGenerator");
+    
+    VJS.__compilePatched = true;
+    
+    console.log("✅ VJS.compile atualizado e usando CodeGenerator correto");
+    
   }
-
+  
   overrideCompile();
-
+  
 })();

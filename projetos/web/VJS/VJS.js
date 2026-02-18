@@ -185,8 +185,34 @@
     isAtEnd() { const t = this.peek(); return !t || t.type === "EOF"; }
     advance() { if (!this.isAtEnd()) return this.tokens[this.current++]; return this.peek(); }
     check(type) { const t = this.peek(); return t && t.type === type; }
-    match(...types) { for (const t of types) if (this.check(t)) return this.advance(); return null; }
-    expect(type, message) { const token = this.match(type); if (!token) { const found = this.peek()?.type || "EOF"; throw new Error((message?message+" — ":"") + `Esperado ${type} mas encontrado ${found}`); } return token; }
+    match(...types) {
+      for (const type of types) {
+        if (this.check(type)) {
+          return this.advance();
+        }
+      }
+      return null;
+    }
+    
+    expect(types, message) {
+    
+      // Permitir string ou array
+      if (!Array.isArray(types)) {
+        types = [types];
+      }
+    
+      const token = this.match(...types);
+    
+      if (!token) {
+        const found = this.peek()?.type || "EOF";
+        throw new Error(
+          (message ? message + " — " : "") +
+          `Esperado ${types.join(",")} mas encontrado ${found}`
+        );
+      }
+    
+      return token;
+    }
     isKeywordValue(token, ...aliases) { if (!token || token.type !== "KEYWORD") return false; return aliases.includes(token.value); }
 
     parse() {
@@ -469,25 +495,52 @@
         }
         if (this.check("DOT")) {
           this.advance();
-          const prop = this.expect("IDENTIFIER","Esperado identificador apos '.'");
-          expr = { type:"MemberExpression", object: expr, property: { type:"Identifier", name: prop.value }, computed: false };
+        
+          const prop = this.expect(
+            ["IDENTIFIER","BUILTIN"],
+            "Esperado identificador apos '.'"
+          );
+        
+          expr = {
+            type: "MemberExpression",
+            object: expr,
+            property: { type: "Identifier", name: prop.value },
+            computed: false
+          };
+        
           continue;
         }
         if (this.check("OPTIONAL_CHAIN")) {
           this.advance();
-          if (this.check("IDENTIFIER")) {
-            const prop = this.advance();
-            expr = { type:"OptionalMemberExpression", object: expr, property: { type:"Identifier", name: prop.value } };
-          } else if (this.check("LPAREN")) {
+          
+          if (this.check("LPAREN")) {
             this.advance();
             const args = [];
+            
             while (!this.check("RPAREN") && !this.isAtEnd()) {
               args.push(this.parseExpression());
               if (this.check("COMMA")) this.advance();
             }
+            
             this.expect("RPAREN");
-            expr = { type:"OptionalCallExpression", callee: expr, arguments: args };
+            
+            expr = {
+              type: "OptionalCallExpression",
+              callee: expr,
+              arguments: args
+            };
+            
+          } else {
+            
+            const prop = this.expect(["IDENTIFIER", "BUILTIN"], "Esperado identificador após ?.");
+            
+            expr = {
+              type: "OptionalMemberExpression",
+              object: expr,
+              property: { type: "Identifier", name: prop.value }
+            };
           }
+          
           continue;
         }
         break;
