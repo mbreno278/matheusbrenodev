@@ -331,21 +331,42 @@ export class VJSParser {
 
     // parse parameters
     this.expect("LPAREN", "Esperado '(' em definição de método");
-    const params = [];
-    while (!this.check("RPAREN") && !this.isAtEnd()) {
-      const paramTok = this.expect("IDENTIFIER", "Esperado nome do parâmetro");
-      let typeAnnotation = null;
-      if (this.check("COLON")) {
-        this.advance();
-        const typeTok = this.expect(["IDENTIFIER","TYPE"], "Esperado tipo após ':'");
-        typeAnnotation = { type: "TypeAnnotation", typeName: typeTok.value };
-      }
-      params.push({ type: "Identifier", name: paramTok.value, typeAnnotation });
-      if (!this.check("COMMA")) break;
-      this.advance();
-    }
-    this.expect("RPAREN", "Esperado ')' após parâmetros");
 
+    const params = [];
+    
+    while (!this.check("RPAREN") && !this.isAtEnd()) {
+      
+      const paramTok = this.expect("IDENTIFIER", "Esperado nome do parâmetro");
+      
+      let typeAnnotation = null;
+      let defaultValue = null;
+      
+      // 🔵 Tipo opcional
+      if (this.match("COLON")) {
+        const typeTok = this.expect("IDENTIFIER", "Esperado tipo após ':'");
+        typeAnnotation = {
+          type: "TypeAnnotation",
+          typeName: typeTok.value
+        };
+      }
+      
+      // 🔥 Valor padrão opcional
+      if (this.match("EQUALS")) {
+        defaultValue = this.parseExpression();
+      }
+      
+      params.push({
+        type: "Identifier",
+        name: paramTok.value,
+        typeAnnotation,
+        defaultValue
+      });
+      
+      if (!this.match("COMMA")) break;
+    }
+    
+    this.expect("RPAREN", "Esperado ')' após parâmetros");
+    
     // return type (optional)
     let returnType = null;
     if (this.check("COLON")) {
@@ -397,27 +418,35 @@ export class VJSParser {
     const params = [];
 
     while (!this.check("RPAREN") && !this.isAtEnd()) {
+
       const param = this.expect("IDENTIFIER", "Esperado nome do parâmetro");
-
+    
       let typeAnnotation = null;
-
-      if (this.check("COLON")) {
-        this.advance();
-        const typeToken = this.expect(["IDENTIFIER", "TYPE"], "Esperado tipo após ':'");
+      let defaultValue = null;
+    
+      // 🔵 Tipo opcional
+      if (this.match("COLON")) {
+        const typeToken = this.expect("IDENTIFIER", "Esperado tipo após ':'");
+    
         typeAnnotation = {
           type: "TypeAnnotation",
           typeName: typeToken.value
         };
       }
-
+    
+      // 🔥 Valor padrão opcional
+      if (this.match("EQUALS")) {
+        defaultValue = this.parseExpression();
+      }
+    
       params.push({
         type: "Identifier",
         name: param.value,
-        typeAnnotation
+        typeAnnotation,
+        defaultValue
       });
-
-      if (!this.check("COMMA")) break;
-      this.advance();
+    
+      if (!this.match("COMMA")) break;
     }
 
     this.expect("RPAREN", "Esperado ')' após lista de parâmetros");
@@ -829,7 +858,20 @@ export class VJSParser {
     if (!token) this._throwSyntax("Expressão inesperada no final do código", token);
 
     // numero / string
-    if (this.match("NUMBER")) return { type: "Literal", value: Number(token.value) };
+    
+    // Tratamento do tipo Numero em VJS
+    if (this.match("NumericLiteral")) {
+      this.advance(); // consome o token
+      return {
+        type: "NumericLiteral",
+        value: token.value,   // Number ou BigInt
+        raw: token.raw,
+        isBig: token.isBig,
+        kind: token.kind,
+        base: token.base
+      };
+    }
+
     if (this.match("STRING")) return { type: "Literal", value: token.value };
     if (this.match("TEMPLATE")) return { type: "TemplateLiteral", value: token.value };
 
